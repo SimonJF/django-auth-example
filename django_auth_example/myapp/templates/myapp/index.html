@@ -8,9 +8,20 @@
     <p>No comments yet.</p>
 {% endif %}
 
-<h1>Post a new comment</h1>
-<form action="/myapp/post_comment" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit">
-</form>
+
+{% if logged_in_user %}
+    <h1>Post a new comment (as {{ logged_in_user }})</h1>
+    <form action="/myapp/post_comment" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit">
+    </form>
+
+    <a href="/myapp/logout">Log out</a>
+{% else %}
+    <h1>You are not logged in</h1>
+    <ul>
+        <li><a href="/myapp/login">Log in</a></li>
+        <li><a href="/myapp/register">Register</a></li>
+    </ul>
+{% endif %}

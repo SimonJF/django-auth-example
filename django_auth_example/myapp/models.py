@@ -5,6 +5,9 @@ class AppUser(models.Model):
     name = models.CharField(max_length=30)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+def find_app_user(user):
+    return AppUser.objects.get(user=user)
+
 class Comment(models.Model):
     user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
     comment = models.CharField(max_length=200)
