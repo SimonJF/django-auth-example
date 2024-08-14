@@ -1,0 +1,16 @@
+{% if comments %}
+    <ul>
+    {% for comment in comments %}
+    <li>{{comment.user.name}}: {{ comment.comment }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No comments yet.</p>
+{% endif %}
+
+<h1>Post a new comment</h1>
+<form action="/myapp/post_comment" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
