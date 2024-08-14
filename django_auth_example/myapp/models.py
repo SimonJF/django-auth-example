@@ -1,17 +1,20 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-class User(models.Model):
+class AppUser(models.Model):
     name = models.CharField(max_length=30)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE)
     comment = models.CharField(max_length=200)
 
 def default_user():
     try:
-        return User.objects.get(name="DefaultUser")
+        return AppUser.objects.get(name="DefaultUser")
     except:
-        default_user = User(name = "DefaultUser")
+        base_user = User.objects.create_user("default", "default@default.com", "defaultpassword")
+        default_user = AppUser(name="DefaultUser", user=base_user)
         default_user.save()
         return default_user
 
